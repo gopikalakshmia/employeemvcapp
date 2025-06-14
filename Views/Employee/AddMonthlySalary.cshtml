@@ -1,0 +1,28 @@
+@model employeemvcapp.Models.EmployeeSalary;
+
+<h1>Add Monthly Salary</h1>
+
+<form method="post">
+    <input asp-for="EmployeeId" hidden/>
+    <div class="d-flex flex-column align-items-center">
+        <div class="p-3">
+            <label>Name</label>
+            <input type="text" value="@Model.Employee.FirstName" disabled>
+
+        </div>
+        <div class="p-3">
+            <label asp-for="Amount"></label>
+            <input type="text" asp-for="Amount" />
+            <span asp-validation-for="Amount" style="color: red;"></span>
+        </div>
+        <div>
+            <label asp-for="SalaryDate"></label>
+            <input type="date" asp-for="SalaryDate" />
+            <span asp-validation-for="SalaryDate" style="color: red;"></span>
+        </div>
+        <div>
+            <button asp-action="AddMonthlySalary" class="btn-success">Save</button>
+            <button asp-action="Index" class="btn-secondary">Cancel</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,153 @@
+@using System.Text.Json
+@model List<employeemvcapp.Models.Employee>;
+
+<h1>All employees</h1>
+<a asp-action="Create">Create New Employee</a>
+<table>
+    <tbody>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>City</th>
+        <th>Zip</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tbody>
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>
+                @item.FirstName
+            </td>
+            <td>
+                @item.LastName
+            </td>
+            <td>
+                @item.City
+        <td>
+                @item.Zip
+            </td>
+            <td class="p-2 m-3">
+                <a asp-action="AddMonthlySalary" asp-route-id="@item.id"><button>Add Monthly Salary</button></a>
+            </td>
+            <td class="p-2 m-3">
+                <button data-bs-toggle="modal" data-bs-target="#editEmployee" data-id="@item.id"
+                    data-fName="@item.FirstName" data-lName="@item.LastName" data-city="@item.City"
+                    data-zip="@item.Zip">Edit</button>
+            </td>
+            <td>
+                @* <button data-bs-toggle="modal" data-bs-target="#editEmployee" data-id="@item.id"
+                    data-fName="@item.FirstName" data-lName="@item.LastName" data-salaries='@Html.Raw(JsonSerializer.Serialize(item.Salaries))'" >Show Salary</button> *@
+                    <button data-bs-toggle="modal" data-bs-target="#showSalary" data-id="@item.id"
+                    data-fName="@item.FirstName" data-lName="@item.LastName" data-salaries='@Html.Raw(JsonSerializer.Serialize(item.Salaries.Select(c=>c.Amount).FirstOrDefault()))'>Show Salary</button>
+            </td>
+
+
+        </tr>
+    }
+
+</table>
+
+<div class="modal" id="editEmployee" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <h1>Edit Employee</h1>
+            <form method="post" asp-action="EditEmployee">
+
+                <input type="text" hidden id="id" name="id" />
+                <div> <label for="fName">First Name</label>
+                    <input type="text" id="fname" name="FirstName" />
+                </div>
+                <div> <label for="lName">Last Name</label>
+                    <input type="text" id="lName" name="LastName" />
+                </div>
+                <div> <label for="city">City</label>
+                    <input type="text" id="city" name="City" />
+                </div>
+                <div> <label for="zip">Zip</label>
+                    <input type="text" id="zip" name="Zip" />
+                </div>
+
+                <div>
+                    <button>Save</button>
+                    <button type="button" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    var editPopUp = document.getElementById("editEmployee");
+    editPopUp.addEventListener('show.bs.modal', (event) => {
+        console.log("hello");
+        var button = event.relatedTarget;
+        console.log(button);
+        let id = button.getAttribute('data-id');
+        let fName = button.getAttribute('data-fName');
+        let lName = button.getAttribute('data-lName');
+        let city = button.getAttribute('data-city');
+        let zip = button.getAttribute('data-zip');
+        console.log(id, fName, city, zip);
+        document.getElementById('id').value = id;
+        document.getElementById('fname').value = fName;
+        document.getElementById('lName').value = lName;
+        document.getElementById('city').value = city;
+        document.getElementById('zip').value = zip;
+
+    })
+</script>
+
+
+<div class="modal" id="showSalary" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <h1>Salary Details</h1>
+            <form>
+
+                <input type="text" hidden id="id" name="id" disabled/>
+                <div> <label for="fNameS">First Name</label>
+                    <input type="text" id="fnames" name="FirstName" disabled/>
+                </div>
+                <div> <label for="lName">Last Name</label>
+                    <input type="text" id="lNames" name="LastName" disabled/>
+                </div>
+                <div> <label for="salary">Salary</label>
+                    <input type="text" id="salary" name="salary" disabled/>
+                </div>
+                
+
+                <div>
+                    <button type="button" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    var salaryPopUp = document.getElementById("showSalary");
+    salaryPopUp.addEventListener('show.bs.modal', (event) => {
+        console.log("hello");
+        var button = event.relatedTarget;
+        console.log(button);
+        let id = button.getAttribute('data-id');
+        let fName = button.getAttribute('data-fName');
+        let lName = button.getAttribute('data-lName');
+        let salary=JSON.parse(button.getAttribute('data-salaries')) ;
+        console.log(id, fName,salary);
+        document.getElementById('id').value = id;
+        document.getElementById('fnames').value = fName;
+        document.getElementById('lNames').value = lName;
+         document.getElementById('salary').value = salary;
+       
+
+    })
+</script>

@@ -1,0 +1,32 @@
+@model employeemvcapp.Models.Employee
+<h1>Create</h1>
+
+<form method="post">
+    <div  class="d-flex flex-column align-items-center">
+    <div class="p-3">
+        <label asp-for="FirstName"></label>
+        <input type="text" asp-for="FirstName" />
+        <span asp-validation-for="FirstName" style="color: red;"></span>
+    </div>
+    <div class="p-3">
+        <label asp-for="LastName"></label>
+        <input type="text" asp-for="LastName" />
+          <span asp-validation-for="LastName" style="color: red;"></span>
+    </div>
+   <div class="p-3">
+        <label asp-for="City"></label>
+        <input type="text" asp-for="City" />
+        <span asp-validation-for="City" style="color: red;"></span>
+    </div>
+    <div class="p-3">
+        <label asp-for="Zip"></label>
+        <input type="text" asp-for="Zip" />
+        <span asp-validation-for="Zip" style="color: red;"></span>
+    </div>
+    <div>
+        <button asp-action="Create" class="btn-success">Save</button>
+        <button asp-action="Index" class="btn-secondary">Cancel</button>
+    </div>
+    </div>
+</form>
+
