@@ -1,7 +1,7 @@
 @model employeemvcapp.Models.Employee
 <h1>Create</h1>
 
-<form method="post">
+<form method="post" asp-action="Create">
     <div  class="d-flex flex-column align-items-center">
     <div class="p-3">
         <label asp-for="FirstName"></label>
@@ -24,7 +24,7 @@
         <span asp-validation-for="Zip" style="color: red;"></span>
     </div>
     <div>
-        <button asp-action="Create" class="btn-success">Save</button>
+        <button class="btn-success">Save</button>
         <button asp-action="Index" class="btn-secondary">Cancel</button>
     </div>
     </div>

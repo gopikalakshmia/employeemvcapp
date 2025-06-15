@@ -22,6 +22,6 @@ public class Employee
     public DateTime CreatedDate { get; set; }
 
     //forignkey
-    public ICollection<EmployeeSalary> Salaries { get; set; }
+    public ICollection<EmployeeSalary>? Salaries { get; set; }
 
 }
